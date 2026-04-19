@@ -17,27 +17,32 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set image name
+        run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          REPO=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
+          echo "IMAGE=ghcr.io/${OWNER}/${REPO}" >> $GITHUB_ENV
+
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build & Push Docker image
         run: |
           docker build \
-            -t ghcr.io/hugodavid-42/zestnet:latest \
-            -t ghcr.io/hugodavid-42/zestnet:${{ github.sha }} .
-          docker push ghcr.io/hugodavid-42/zestnet:latest
-          docker push ghcr.io/hugodavid-42/zestnet:${{ github.sha }}
+            -t ${{ env.IMAGE }}:latest \
+            -t ${{ env.IMAGE }}:${{ github.sha }} .
+          docker push ${{ env.IMAGE }}:latest
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
 
       - name: Update deploy.yaml with new tag
         run: |
-          SHA=${{ github.sha }}
-          sed -i "s|image: ghcr.io/hugodavid-42/zestnet:.*|image: ghcr.io/hugodavid-42/zestnet:${SHA}|" deploy.yaml
+          sed -i "s|image: ghcr.io/.*|image: ${{ env.IMAGE }}:${{ github.sha }}|" deploy.yaml
 
       - name: Commit updated deploy.yaml
         run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/hugodavid-42/demo.git
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add deploy.yaml
-          git commit -m "update image tag"
+          git commit -m "update image tag to ${{ github.sha }}"
           git push
