@@ -1,0 +1,41 @@
+---
+version: "2.0"
+
+services:
+  web:
+    image: ghcr.io/hugodavid-42/zestnet:latest  # ← remplace TON_USERNAME_GITHUB
+    expose:
+      - port: 80
+        as: 80
+        accept:
+          - zestnet.org
+          - www.zestnet.org
+        to:
+          - global: true
+
+profiles:
+  compute:
+    web:
+      resources:
+        cpu:
+          units: 1
+        memory:
+          size: 128Mi
+        storage:
+          - size: 256Mi
+  placement:
+    akash:
+      pricing:
+        web:
+          denom: uakt
+          amount: 100
+      signedBy:
+        anyOf:
+          - akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63
+        allOf: []
+
+deployment:
+  web:
+    akash:
+      profile: web
+      count: 1
