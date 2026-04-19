@@ -2,7 +2,7 @@
 version: "2.0"
 services:
   web:
-    image: ghcr.io/hdavid-13/static-akash-website:7bb42a315ce7e48bccd89b443d8490067179daaf
+    image: ghcr.io/hdavid-13/static-akash-website:1f653bace5b26205bb4d26fd521d003c45119def
     expose:
       - port: 80
         as: 80
