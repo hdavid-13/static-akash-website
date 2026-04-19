@@ -3,7 +3,7 @@ version: "2.0"
 
 services:
   web:
-    image: ghcr.io/hugodavid-42/zestnet:d0aa0bbad5f52e62b461a50a1c3b4f5a56b7ada7
+    image: ghcr.io/hugodavid-42/zestnet:7fe988aa6eeefccb2708e7280e5110a433eea502
     expose:
       - port: 80
         as: 80
