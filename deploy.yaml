@@ -1,18 +1,16 @@
 ---
 version: "2.0"
-
 services:
   web:
-    image: ghcr.io/hugodavid-42/demo:14b21962834c480eefadcaa802855030d21d7392
+    image: ghcr.io/hugodavid-42/demo:9542f2ff6caa79e6aa62fa9954b67e7eb770c3ac
     expose:
       - port: 80
         as: 80
         accept:
-          - ${{ secrets.DOMAIN }}
-          - www.${{ secrets.DOMAIN }}
+          - zestnet.org
+          - www.zestnet.org
         to:
           - global: true
-
 profiles:
   compute:
     web:
@@ -33,7 +31,6 @@ profiles:
         anyOf:
           - akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63
         allOf: []
-
 deployment:
   web:
     akash:
