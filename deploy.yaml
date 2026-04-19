@@ -8,8 +8,8 @@ services:
       - port: 80
         as: 80
         accept:
-          - zestnet.org
-          - www.zestnet.org
+          - ${{ secrets.DOMAIN }}
+          - www.${{ secrets.DOMAIN }}
         to:
           - global: true
 
