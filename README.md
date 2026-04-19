@@ -61,7 +61,7 @@ In your new repo:
 
 ## Step 4 — Build your own site
 
-This template uses plain **static HTML and CSS** — no framework, no build tool, no JavaScript required. Static means your site is just files served directly by nginx: fast, simple, and perfectly suited for Akash Network.
+This template uses plain **static HTML and CSS** no framework, no build tool, no JavaScript required. Static means your site is just files served directly by nginx: fast, simple, and perfectly suited for Akash Network.
 
 Everything lives in the `site/` folder. You can completely replace the existing `index.html` and add any files you want:
 
@@ -86,7 +86,7 @@ site/
 - Forms that send emails (unless you use a third-party service like Formspree)
 - Any server-side logic (PHP, Python, Node.js...)
 
-To get started, simply delete the contents of `site/index.html` and write your own HTML and CSS from scratch — or keep the existing design and modify it. Either way, as long as your main file is named `index.html`, the template will handle the rest automatically.
+To get started, simply delete the contents of `site/index.html` and write your own HTML and CSS from scratch or keep the existing design and modify it. Either way, as long as your main file is named `index.html`, the template will handle the rest automatically.
 
 ---
 
@@ -137,9 +137,9 @@ By default, ghcr.io images are private. Akash needs to pull the image so it must
 5. Click **Create Deployment**
 6. Review the bids from providers and select one
 7. Click **Accept Bid** and confirm the transaction in Keplr
-8. Wait for the deployment to start — you will see a **public URL** like `xyz.provider.akash.network`
+8. Wait for the deployment to start you will see a **public URL** like `xyz.provider.akash.network`
 
-> Note the public URL — you will need it in the next step.
+> Note the public URL you will need it in the next step.
 
 ---
 
