@@ -29,7 +29,9 @@ jobs:
           docker push ghcr.io/hugodavid-42/zestnet:${{ github.sha }}
 
       - name: Update deploy.yaml with new tag
-        run: sed -i "s|image: ghcr.io/hugodavid-42/zestnet:.*|image: ghcr.io/hugodavid-42/zestnet:${{ github.sha }}|" deploy.yaml
+        run: |
+          SHA=${{ github.sha }}
+          sed -i "s|image: ghcr.io/hugodavid-42/zestnet:.*|image: ghcr.io/hugodavid-42/zestnet:${SHA}|" deploy.yaml
 
       - name: Commit updated deploy.yaml
         run: |
@@ -37,5 +39,5 @@ jobs:
           git config user.name "GitHub Actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/hugodavid-42/demo.git
           git add deploy.yaml
-          git commit -m "update image tag to ${{ github.sha }}"
+          git commit -m "update image tag"
           git push
