@@ -34,9 +34,48 @@ jobs:
           docker push ${{ env.IMAGE }}:latest
           docker push ${{ env.IMAGE }}:${{ github.sha }}
 
-      - name: Update deploy.yaml with new tag
+      - name: Generate deploy.yaml
         run: |
-          sed -i "s|image: ghcr.io/.*|image: ${{ env.IMAGE }}:${{ github.sha }}|" deploy.yaml
+          cat > deploy.yaml << YAML
+          ---
+          version: "2.0"
+          services:
+            web:
+              image: ${{ env.IMAGE }}:${{ github.sha }}
+              expose:
+                - port: 80
+                  as: 80
+                  accept:
+                    - ${{ secrets.DOMAIN }}
+                    - www.${{ secrets.DOMAIN }}
+                  to:
+                    - global: true
+          profiles:
+            compute:
+              web:
+                resources:
+                  cpu:
+                    units: 1
+                  memory:
+                    size: 128Mi
+                  storage:
+                    - size: 256Mi
+            placement:
+              akash:
+                pricing:
+                  web:
+                    denom: uakt
+                    amount: 100
+                signedBy:
+                  anyOf:
+                    - akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63
+                  allOf: []
+          deployment:
+            web:
+              akash:
+                profile: web
+                count: 1
+          YAML
 
       - name: Commit updated deploy.yaml
         run: |
@@ -44,5 +83,5 @@ jobs:
           git config user.name "GitHub Actions"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add deploy.yaml
-          git commit -m "update image tag to ${{ github.sha }}"
+          git commit -m "update deploy.yaml"
           git push
