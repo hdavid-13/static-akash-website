@@ -59,19 +59,34 @@ In your new repo:
 
 ---
 
-## Step 4: Customize your site
+## Step 4 — Build your own site
 
-Edit `site/index.html` to make the site yours:
+This template uses plain **static HTML and CSS** — no framework, no build tool, no JavaScript required. Static means your site is just files served directly by nginx: fast, simple, and perfectly suited for Akash Network.
 
-- Update the text under `whoami` with your own description
-- Update the text under `cat about.txt`
-- Replace the `href="#"` on the three links with your real URLs:
+Everything lives in the `site/` folder. You can completely replace the existing `index.html` and add any files you want:
 
-```html
-<a href="https://github.com/YOUR_USERNAME">github</a>
-<a href="https://twitter.com/YOUR_USERNAME">twitter</a>
-<a href="https://youtube.com/@YOUR_CHANNEL">youtube</a>
 ```
+site/
+├── index.html       ← your main page (required)
+├── style.css        ← your styles
+├── about.html       ← any additional pages
+└── images/          ← your images
+    └── photo.jpg
+```
+
+**What you can build:**
+- A personal homepage / bio page
+- A portfolio
+- A link-in-bio page
+- A landing page for a project
+- Any site that doesn't need a backend or database
+
+**What you cannot do with static hosting:**
+- User login / authentication
+- Forms that send emails (unless you use a third-party service like Formspree)
+- Any server-side logic (PHP, Python, Node.js...)
+
+To get started, simply delete the contents of `site/index.html` and write your own HTML and CSS from scratch — or keep the existing design and modify it. Either way, as long as your main file is named `index.html`, the template will handle the rest automatically.
 
 ---
 
